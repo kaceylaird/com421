@@ -7,7 +7,7 @@ def menu():
         print("1. Add a new destination.")
         print("2. Search for a place to stay.")
         print("3. Display all places to stay.")
-        print("4. Query Destinations.")
+        print("4. FAQ's.")
         print("5. Make a Booking.")
         print("6. Exit the Program.")
 
