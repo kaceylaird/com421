@@ -7,7 +7,7 @@ def menu():
         print("1. Add a new destination.")
         print("2. Search for a place to stay.")
         print("3. Display all places to stay.")
-        print("4. FAQ's.")
+        print("4. Enquiries")
         print("5. Make a Booking.")
         print("6. Exit the Program.")
 
@@ -44,7 +44,7 @@ def menu():
                 print("----------------")
 
         elif choice == '4':
-            query_location()
+            menu2()
             break
 
         elif choice == '5':
@@ -162,6 +162,53 @@ def booking():
             booking()
         else:
             print("Exiting")
+
+
+def make_enquiry():
+    enquiry = input("Please enter your enquiry: ")
+    with open('enquiries.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([enquiry, ""])  # Write the enquiry with an empty answer
+    print("Your enquiry has been recorded.")
+
+
+def answer_enquiries():
+    # Load all enquiries and answers
+    with open('enquiries.csv', 'r', newline='') as file:
+        rows = list(csv.reader(file))
+
+    # Display the first unanswered enquiry
+    for i, row in enumerate(rows):
+        if not row[1]:  # Check if the answer is empty
+            print(f"Enquiry: {row[0]}")
+            answer = input("Enter your answer: ")
+            rows[i][1] = answer  # Update the answer
+            break
+    else:
+        print("There are no unanswered enquiries.")
+        return
+
+    # Save the updated enquiries and answers back to the file
+    with open('enquiries.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(rows)
+    print("The enquiry has been answered.")
+
+
+# Example of adding the options to your menu
+def menu2():
+    while True:
+        print("\n1. Make an Enquiry\n2. Answer Enquiries\n3. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            make_enquiry()
+        elif choice == '2':
+            answer_enquiries()
+        elif choice == '3':
+            break
+        else:
+            print("Invalid option, please try again.")
 
 
 def main():
