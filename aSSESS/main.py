@@ -16,9 +16,9 @@ def menu():
         if choice == '1':
             print("Loading Adding Queries")
             add()
-            print("Would you like to continue? y/n")
+            print("Would you like to continue? (yes/no)")
             cont = input()
-            if cont == 'n':
+            if cont == 'no':
                 break
             else:
                 print("----------------")
@@ -26,9 +26,9 @@ def menu():
         elif choice == '2':
             print("Entering Search Query...")
             search()
-            print("Would you like to continue? y/n")
+            print("Would you like to continue? (yes/no)")
             cont = input()
-            if cont == 'n':
+            if cont == 'no':
                 break
             else:
                 print("----------------")
@@ -36,9 +36,9 @@ def menu():
         elif choice == '3':
             print("Showing All Destinations:")
             show_all()
-            print("Would you like to continue? y/n")
+            print("Would you like to continue? (yes/no)")
             cont = input()
-            if cont == 'n':
+            if cont == 'no':
                 break
             else:
                 print("----------------")
