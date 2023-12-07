@@ -9,9 +9,10 @@ def menu():
         print("3. Display all places to stay.")
         print("4. Enquiries")
         print("5. Make a Booking.")
-        print("6. Exit the Program.")
+        print("6. Find a Route.")
+        print("7. Exit the Program.")
 
-        choice = input("Enter your choice (1-6): ")
+        choice = input("Enter your choice (1-7): ")
 
         if choice == '1':
             print("Loading Adding Queries")
@@ -57,6 +58,9 @@ def menu():
             break
 
         elif choice == '6':
+            routing()
+
+        elif choice == '7':
             print("Exiting the program!")
             break
 
@@ -195,7 +199,6 @@ def answer_enquiries():
     print("The enquiry has been answered.")
 
 
-# Example of adding the options to your menu
 def menu2():
     while True:
         print("\n1. Make an Enquiry\n2. Answer Enquiries\n3. Exit")
@@ -209,6 +212,77 @@ def menu2():
             break
         else:
             print("Invalid option, please try again.")
+
+
+distances_from_railway_station = {
+        "Travelodge": 0.4,
+        "Premier Inn": 1.1,
+        "Winchester Royal": 12.4,
+        "Holiday Inn": 4.9,
+        "Oxford Street Stays": 1.7,
+        "Moodys": 7.8,
+        "Hermes Apartment": 1.8,
+        "Casadele Bnb": 11,
+        "Claremont Guest House": 0.6,
+        "Stonehenge Hostel": 39.8,
+        "Starboard Stays": 1.5,
+        "Moxy": 1.5,
+        "Leonardo": 1.7,
+        "Best Western": 4.3,
+        "The Star": 1.8,
+        "Doubletree": 3.1,
+        "No.4 Carlton": 0.3,
+        "Ibis": 1.4,
+        "Botley Park Hotel": 8.4,
+        "Botleigh Grange": 7.3
+    }
+
+
+distances_from_bus_station = {
+        "Travelodge": 0.2,
+        "Premier Inn": 1.0,
+        "Winchester Royal": 12.0,
+        "Holiday Inn": 4.6,
+        "Oxford Street Stays": 1.4,
+        "Moodys": 7.3,
+        "Hermes Apartment": 1.4,
+        "Casadele Bnb": 10.4,
+        "Claremont Guest House": 0.3,
+        "Stonehenge Hostel": 39.3,
+        "Starboard Stays": 1.2,
+        "Moxy": 1.1,
+        "Leonardo": 1.4,
+        "Best Western": 4.1,
+        "The Star": 1.3,
+        "Doubletree": 2.9,
+        "No.4 Carlton": 0.6,
+        "Ibis": 0.4,
+        "Botley Park Hotel": 8.1,
+        "Botleigh Grange": 7.2
+
+    }
+
+
+def find_route(start_point, destination):
+    if start_point == "railway station":
+        distances = distances_from_railway_station
+    elif start_point == "bus station":
+        distances = distances_from_bus_station
+    else:
+        print("Invalid start point. Choose 'railway station' or 'bus station'.")
+        return
+
+    distance = distances.get(destination)
+    if distance is not None:
+        print(f"The distance from the {start_point} to {destination} is {distance} miles.")
+    else:
+        print("Destination not found.")
+
+
+def routing():
+    start_point = input("Enter the start point (railway station or bus station): ").lower()
+    destination = (input("Enter the name of the destination: ").lower())
+    find_route(start_point, destination)
 
 
 def main():
