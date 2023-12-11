@@ -5,11 +5,11 @@ def menu():
     while True:
         print("What would you lke to do?")
         print("1. Add a new destination.")
-        print("2. Search for a place to stay.")
-        print("3. Display all places to stay.")
-        print("4. Enquiries")
-        print("5. Make a Booking.")
-        print("6. Find a Route.")
+        print("2. Search for a specific area to stay")
+        print("3. Search for a place to stay.")
+        print("4. Display all places to stay.")
+        print("5. Enquiries")
+        print("6. Make a Booking.")
         print("7. Exit the Program.")
 
         choice = input("Enter your choice (1-7): ")
@@ -25,6 +25,9 @@ def menu():
                 print("----------------")
 
         elif choice == '2':
+            area()
+
+        elif choice == '3':
             print("Entering Search Query...")
             search()
             print("Would you like to continue? (yes/no)")
@@ -34,21 +37,24 @@ def menu():
             else:
                 print("----------------")
 
-        elif choice == '3':
+        elif choice == '4':
             print("Showing All Destinations:")
             show_all()
             print("Would you like to continue? (yes/no)")
             cont = input()
             if cont == 'no':
                 break
-            else:
+            elif cont == 'yes':
                 print("----------------")
+            else:
+                print("Invalid Response!")
+                break
 
-        elif choice == '4':
+        elif choice == '5':
             menu2()
             break
 
-        elif choice == '5':
+        elif choice == '6':
             print("Loading Booking Query:")
             print("Here is our list of locations:")
             print("------------------")
@@ -56,9 +62,6 @@ def menu():
             print("------------------")
             booking()
             break
-
-        elif choice == '6':
-            routing()
 
         elif choice == '7':
             print("Exiting the program!")
@@ -68,13 +71,51 @@ def menu():
             print("Invalid Choice!")
 
 
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n-1):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+
 def show_all():
     with open('dest.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         names = [row[0] for row in reader if row]
-        names.sort()
-        for name in names:
-            print(name)
+
+    bubble_sort(names)
+
+    for name in names:
+        print(name)
+
+
+def area():
+    print("What area would you like to stay in?")
+    print("1. Southampton City Centre")
+    print("2. Winchester")
+    print("3. Eastleigh")
+    print("4. Salisbury")
+
+    choice = input("Enter your choice (1-4): ")
+
+    if choice == '1':
+        area_to_search = "Southampton"
+    elif choice == '2':
+        area_to_search = "Winchester"
+    elif choice == '3':
+        area_to_search = "Eastleigh"
+    elif choice == '4':
+        area_to_search = "Salisbury"
+    else:
+        print("Invalid choice!")
+        return
+
+    with open('dest.csv', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if area_to_search.lower() in row[3].lower():
+                print(row[0])
 
 
 def search():
@@ -87,7 +128,8 @@ def search():
     with open('dest.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         filtered_places = [row for row in reader if row and choice in row[1].lower()]
-        filtered_places.sort(key=lambda x: x[0])
+
+        bubble_sort(filtered_places)
 
         for place in filtered_places:
             print(place[0])
@@ -172,7 +214,7 @@ def make_enquiry():
     enquiry = input("Please enter your enquiry: ")
     with open('enquiries.csv', 'a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow([enquiry, ""])  # Write the enquiry with an empty answer
+        writer.writerow([enquiry, ""])
     print("Your enquiry has been recorded.")
 
 
@@ -186,7 +228,7 @@ def answer_enquiries():
         if not row[1]:  # Check if the answer is empty
             print(f"Enquiry: {row[0]}")
             answer = input("Enter your answer: ")
-            rows[i][1] = answer  # Update the answer
+            rows[i][1] = answer
             break
     else:
         print("There are no unanswered enquiries.")
@@ -212,77 +254,6 @@ def menu2():
             break
         else:
             print("Invalid option, please try again.")
-
-
-distances_from_railway_station = {
-        "Travelodge": 0.4,
-        "Premier Inn": 1.1,
-        "Winchester Royal": 12.4,
-        "Holiday Inn": 4.9,
-        "Oxford Street Stays": 1.7,
-        "Moodys": 7.8,
-        "Hermes Apartment": 1.8,
-        "Casadele Bnb": 11,
-        "Claremont Guest House": 0.6,
-        "Stonehenge Hostel": 39.8,
-        "Starboard Stays": 1.5,
-        "Moxy": 1.5,
-        "Leonardo": 1.7,
-        "Best Western": 4.3,
-        "The Star": 1.8,
-        "Doubletree": 3.1,
-        "No.4 Carlton": 0.3,
-        "Ibis": 1.4,
-        "Botley Park Hotel": 8.4,
-        "Botleigh Grange": 7.3
-    }
-
-
-distances_from_bus_station = {
-        "Travelodge": 0.2,
-        "Premier Inn": 1.0,
-        "Winchester Royal": 12.0,
-        "Holiday Inn": 4.6,
-        "Oxford Street Stays": 1.4,
-        "Moodys": 7.3,
-        "Hermes Apartment": 1.4,
-        "Casadele Bnb": 10.4,
-        "Claremont Guest House": 0.3,
-        "Stonehenge Hostel": 39.3,
-        "Starboard Stays": 1.2,
-        "Moxy": 1.1,
-        "Leonardo": 1.4,
-        "Best Western": 4.1,
-        "The Star": 1.3,
-        "Doubletree": 2.9,
-        "No.4 Carlton": 0.6,
-        "Ibis": 0.4,
-        "Botley Park Hotel": 8.1,
-        "Botleigh Grange": 7.2
-
-    }
-
-
-def find_route(start_point, destination):
-    if start_point == "railway station":
-        distances = distances_from_railway_station
-    elif start_point == "bus station":
-        distances = distances_from_bus_station
-    else:
-        print("Invalid start point. Choose 'railway station' or 'bus station'.")
-        return
-
-    distance = distances.get(destination)
-    if distance is not None:
-        print(f"The distance from the {start_point} to {destination} is {distance} miles.")
-    else:
-        print("Destination not found.")
-
-
-def routing():
-    start_point = input("Enter the start point (railway station or bus station): ").lower()
-    destination = (input("Enter the name of the destination: ").lower())
-    find_route(start_point, destination)
 
 
 def main():
