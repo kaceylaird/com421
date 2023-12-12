@@ -219,13 +219,11 @@ def make_enquiry():
 
 
 def answer_enquiries():
-    # Load all enquiries and answers
     with open('enquiries.csv', 'r', newline='') as file:
         rows = list(csv.reader(file))
 
-    # Display the first unanswered enquiry
     for i, row in enumerate(rows):
-        if not row[1]:  # Check if the answer is empty
+        if not row[1]:
             print(f"Enquiry: {row[0]}")
             answer = input("Enter your answer: ")
             rows[i][1] = answer
@@ -234,7 +232,6 @@ def answer_enquiries():
         print("There are no unanswered enquiries.")
         return
 
-    # Save the updated enquiries and answers back to the file
     with open('enquiries.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(rows)
